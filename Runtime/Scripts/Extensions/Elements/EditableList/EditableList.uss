@@ -1,0 +1,54 @@
+﻿.editable-list {
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+}
+
+.editable-list__header {
+    border-color: rgba(0, 0, 0, 0.4);
+    border-bottom-width: 1px;
+    background-color: rgba(0, 0, 0, 0.07);
+}
+
+.editable-list__header__text {
+    -unity-text-align: lower-left;
+}
+
+.editable-list__item {
+    align-items: center;
+}
+
+.editable-list__item, .editable-list__header {
+    flex-direction: row;
+    padding: 1px 4px;
+}
+
+.editable-list__item__content, .editable-list__header__text {
+    flex-basis: 1px;
+    flex-grow: 1;
+}
+
+.editable-list__item__remove-button, .editable-list__header__add-button {
+    width: 16px;
+    height: 16px;
+}
+
+.editable-list__item__drag-button {
+    width: 16px;
+    height: 6px;
+}
+
+.editable-image-button {
+    -unity-background-scale-mode: scale-to-fit;
+    padding: 0;
+    margin: 0;
+}
+
+.editable-image-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.editable-image-button:active {
+    background-color: rgba(0, 0, 0, 0.1);
+}

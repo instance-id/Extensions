@@ -1,1 +1,1 @@
-Extensions
+Packages/com.gameframe.packages/Template/README_TEMPLATE.md
