@@ -166,6 +166,15 @@ namespace instance.id.Extensions
         public static T GetFirstAncestorOfType<T>(this Type elementType, VisualElement element, out VisualElement outElement) where T : VisualElement
         {
             VisualElement outVe = new VisualElement();
+            if (elementType == null || element == null)
+            {
+                var elementTypeBool = elementType == null;
+                var elementBool = element == null;
+                Debug.LogWarning($"Element passed was null: elementType {elementTypeBool} : element {elementBool}");
+                outElement = outVe;
+                return default(T);
+            }
+
             for (VisualElement parent = element.hierarchy.parent; parent != null; parent = parent.hierarchy.parent)
             {
                 if (parent.GetType() == elementType)
