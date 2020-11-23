@@ -35,6 +35,30 @@ namespace instance.id.Extensions
         }
 
         /// <summary>
+        /// Creates the VisualElement and return it as an out variable which can be chained to .ToUSS()
+        /// <example><code>new VisualElement().Create(out var myElement);</code></example>
+        /// </summary>
+        /// <param name="element">The target element to perform this action upon</param>
+        /// <param name="variable">Returns the element as an out variable to allow the user of the nameof() function in chained methods</param>
+        /// <param name="name">If a name is specifically passed as a parameter, it will be used, otherwise the target variable name is used</param>
+        /// <typeparam name="T">VisualElement</typeparam>
+        public static VisualElement CreateWithLabel<T>(this T element, out VisualElement variable, string name = null, string labelText = "") where T : VisualElement
+        {
+            if (name != null) element.name = name;
+
+            new VisualElement().Create(out var elementContainer)
+                .ToUSS($"{element.name}Container", "containerRow");
+
+            new Label {text = labelText}.Create(out var elementLabel)
+                .ToUSS($"{element.name}Label")
+                .SetParent(elementContainer);
+
+            element.SetParent(elementContainer);
+
+            return variable = elementContainer;
+        }
+
+        /// <summary>
         /// Is elementName is passed, sets the target elements name and USS class to elementName.
         /// If no parameter is passed, the element USS class is set to the targets current name.
         /// If neither a parameter is passed, and the target element has no name, the type is used as both name and USS class.
@@ -183,6 +207,28 @@ namespace instance.id.Extensions
 
             outElement = outVe;
             return default(T);
+        }
+
+        public static List<T> GetChildElementsOfType<T>(this Type elementType, VisualElement element, out List<VisualElement> outElement) where T : List<VisualElement>
+        {
+            List<VisualElement> outVe = new List<VisualElement>();
+            if (elementType == null || element == null)
+            {
+                var elementTypeBool = elementType == null;
+                var elementBool = element == null;
+                Debug.LogWarning($"Element passed was null: elementType {elementTypeBool} : element {elementBool}");
+                outElement = outVe;
+                return default(List<T>);
+            }
+
+            var elementItem = element.Query(null, "unity-inspector-editors-list").First();
+            outVe = elementItem.Query()
+                .Children<VisualElement>()
+                .Where(x => x.GetType() == elementType)
+                .ToList();
+
+            outElement = outVe;
+            return default(List<T>);
         }
 
 
